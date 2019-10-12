@@ -9,4 +9,18 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="CooperativaXZ.Infra.CrossCutting.SharedUI\**" />
+    <Content Remove="CooperativaXZ.Infra.CrossCutting.SharedUI\**" />
+    <EmbeddedResource Remove="CooperativaXZ.Infra.CrossCutting.SharedUI\**" />
+    <None Remove="CooperativaXZ.Infra.CrossCutting.SharedUI\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Blazored.LocalStorage" Version="2.1.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="CooperativaXZ.Infra.CrossCutting.SharedUI\CooperatixaXZ.Infra.CrossCutting.SharedUI.csproj" />
+  </ItemGroup>
+
 </Project>
