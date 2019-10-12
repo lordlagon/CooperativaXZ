@@ -9,15 +9,12 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="CooperativaXZ.Infra.CrossCutting.SharedUI\**" />
-    <Content Remove="CooperativaXZ.Infra.CrossCutting.SharedUI\**" />
-    <EmbeddedResource Remove="CooperativaXZ.Infra.CrossCutting.SharedUI\**" />
-    <None Remove="CooperativaXZ.Infra.CrossCutting.SharedUI\**" />
-  </ItemGroup>
+  
 
   <ItemGroup>
-    <PackageReference Include="Blazored.LocalStorage" Version="2.1.1" />
+      <PackageReference Include="HtmlSanitizer" Version="5.0.218-beta" />
+      <PackageReference Include="Markdig" Version="0.17.1" />
+      <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
   </ItemGroup>
 
 </Project>
