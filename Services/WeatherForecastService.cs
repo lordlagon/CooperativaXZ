@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CooperativaXZ.Services
+namespace CooperativaXZ
 {
     public class WeatherForecastService
     {

@@ -1,6 +1,6 @@
 using System;
 
-namespace CooperativaXZ.Services
+namespace CooperativaXZ
 {
     public class WeatherForecast
     {
