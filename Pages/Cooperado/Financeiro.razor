@@ -1,10 +1,10 @@
-@page "/cadastro"
+@page "/financeiro"
 
 <div class="form-group d-flex justify-content-center">
 
 <div class="container">
     <br>
-    <h1 class="display"style="text-align:center">Cadastro</h1>
+    <h1 class="display"style="text-align:center">Informações Financeiras</h1>
     <br>
     <form> 
 
@@ -15,32 +15,30 @@
             </div>
         </div>
 
-
         <div class="form-group">
             <div class="col-md-6 offset-md-3">
-                <label > E-mail </label>
-                <input type="text" name="email" class="form-control " placeholder="E-mail" required="" >    
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-6 offset-md-3">
-                <label > CPF </label>
-                <input type="text" name="cpf" class="form-control " placeholder="CPF" required="" >    
-            </div>
-        </div>     
-
-        <div class="form-group">
-            <div class="col-md-6 offset-md-3">
-                <label> Crie sua senha </label>  
-                <input type="password" name="password" class="form-control" placeholder="Senha" required="">
-                <small id="passHelp" class="form-text text-muted">(A senha deve ter de 8 a 16 caracteres, misturando letras e números.)</small>
+                <label> Conta </label>  
+                <input type="text" name="conta" class="form-control" placeholder="Conta" required="" >
             </div>
         </div> 
 
         <div class="form-group">
             <div class="col-md-6 offset-md-3">
-                <button type="button" class="btn btn-outline-primary">Cadastrar</button>
+                <label > Banco </label>
+                <input type="text" name="banco" class="form-control " placeholder="Baco" required="" >    
+            </div>
+        </div>   
+
+        <div class="form-group">
+            <div class="col-md-6 offset-md-3">
+                <label > Agência </label>
+                <input type="text" name="agencia" class="form-control " placeholder="Agência" required="" >    
+            </div>
+        </div>   
+
+        <div class="form-group">
+            <div class="col-md-6 offset-md-3">
+                <button type="button" class="btn btn-outline-primary">Enviar</button>
                
             </div>
         </div>
