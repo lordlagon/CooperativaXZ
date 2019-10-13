@@ -1,8 +1,14 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.JSInterop;
 
-namespace CooperativaXZ.Services
+namespace CooperativaXZ
 {
+    public interface IJwtService
+    {
+        Task<string> GetTokenAsync();
+        Task<bool> SaveTokenAsync(string Token);
+        Task<bool> DestroyTokenAsync();
+    }
     public class JwtService : IJwtService
     {
         private readonly IJSRuntime jsRuntime;
@@ -14,17 +20,17 @@ namespace CooperativaXZ.Services
 
         public async Task<string> GetTokenAsync()
         {
-            return await jsRuntime.InvokeAsync<string>("RealWorld.getToken");
+            return await jsRuntime.InvokeAsync<string>("CooperativaXZ.getToken");
         }
 
         public async Task<bool> SaveTokenAsync(string Token)
         {
-            return await jsRuntime.InvokeAsync<bool>("RealWorld.saveToken", Token);
+            return await jsRuntime.InvokeAsync<bool>("CooperativaXZ.saveToken", Token);
         }
 
         public async Task<bool> DestroyTokenAsync()
         {
-            return await jsRuntime.InvokeAsync<bool>("RealWorld.destroyToken");
+            return await jsRuntime.InvokeAsync<bool>("CooperativaXZ.destroyToken");
         }
     }
 }
