@@ -4,6 +4,10 @@ html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+.jumbotron{
+    background-color: none;
+}
+
 a, .btn-link {
     color: #0366d6;
 }
@@ -28,6 +32,9 @@ app {
 
 .main {
     flex: 1;
+    background-image: url('/main.jpg');
+
+
 }
 
 .main .top-row {
@@ -41,11 +48,11 @@ app {
 }
 
 .sidebar {
-    background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
+    background-image: linear-gradient(180deg, #000 0%, #848485 70%);
 }
 
 .sidebar .top-row {
-    background-color: rgba(0,0,0,0.4);
+    background-color: rgb(19, 19, 19);
 }
 
 .sidebar .navbar-brand {
@@ -92,7 +99,7 @@ app {
 }
 
 .content {
-    padding-top: 1.1rem;
+    padding-top: none;
 }
 
 .navbar-toggler {
