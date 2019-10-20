@@ -33,6 +33,13 @@ app {
 .main {
     flex: 1;
     background-image: url('/main.jpg');
+    background-repeat: no-repeat;
+    background-size:100%;
+    bottom: 0;
+    overflow: auto;
+    padding: 3em;
+    top: 0;
+    background-size: cover;
 
 
 }
