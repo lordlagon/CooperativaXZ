@@ -1,3 +1,5 @@
+@using Newtonsoft.Json;
+@using CooperativaXZ
 @page "/cadastro"
 
 <div class="form-group d-flex justify-content-center">
@@ -11,7 +13,7 @@
         <div class="form-group"style="margin-top:25px;">
             <div class="col-md-6 offset-md-3">
                 <label > Nome </label>
-                <input type="text" name="name" class="form-control " placeholder="Nome" required="" >    
+                <input bind="@user.Name" type="text" name="name" class="form-control " placeholder="Nome" required="" >    
             </div>
         </div>
 
@@ -19,21 +21,21 @@
         <div class="form-group">
             <div class="col-md-6 offset-md-3">
                 <label > E-mail </label>
-                <input type="text" name="email" class="form-control " placeholder="E-mail" required="" >    
+                <input bind="@user.Email" type="text" name="email" class="form-control " placeholder="E-mail" required="" >    
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-6 offset-md-3">
                 <label > CPF </label>
-                <input type="text" name="cpf" class="form-control " placeholder="CPF" required="" >    
+                <input bind="@user.Cpf" type="text" name="cpf" class="form-control " placeholder="CPF" required="" >    
             </div>
         </div>     
 
         <div class="form-group">
             <div class="col-md-6 offset-md-3">
                 <label> Crie sua senha </label>  
-                <input type="password" name="password" class="form-control" placeholder="Senha" required="">
+                <input bind="@user.Password" type="password" name="password" class="form-control" placeholder="Senha" required="">
                 <small id="passHelp" class="form-text text-muted">(A senha deve ter de 8 a 16 caracteres, misturando letras e números.)</small>
             </div>
         </div> 
@@ -54,3 +56,23 @@
     </form> 
 </div>
 </div>
+
+
+@functions {
+
+    private User user { get; set; } = new User();
+    //precisei separar o user do usermodel pois tava com conflito.
+
+    //onclick=@SaveNewUser adicionar no botao para chamar a funcao
+
+    //exemplo que utilizei pra tentar o post na API --> https://visualstudiomagazine.com/articles/2018/09/07/blazor-apis.aspx
+
+    /*private async Task SaveNewUser()
+    {
+        //colocar a api aqui
+        await httpClient.PostJsonAsync("api/contacts", contact);
+        
+        uriHelper.NavigateTo("contacts");
+    }*/
+
+}
