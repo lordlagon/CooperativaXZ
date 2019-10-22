@@ -9,28 +9,28 @@ namespace CooperativaXZ
     {
         private readonly IJwtService jwtService;
         private readonly IApiService api;
-        private readonly StateService state;
+        public UserModel User { get; set; }
+        public bool IsAuthenticated { get; set; }
 
-        public UserService(IJwtService _jwtService, IApiService _api, StateService _state)
+
+        public UserService(IJwtService _jwtService, IApiService _api)
         {
             jwtService = _jwtService;
             api = _api;
-            state = _state;
         }
 
-        public async Task PopulateAsync()
+        public async Task<UserModel> PopulateAsync()
         {
-            string token = await jwtService.GetTokenAsync();
-
-            if (!string.IsNullOrEmpty(token))
+            if (!string.IsNullOrEmpty(await jwtService.GetTokenAsync()))
             {
-                api.SetToken(token);
                 var response = await api.GetAsync<UserResponse>("/user");
-                state.UpdateUser(response?.Value?.User ?? new UserModel());
+                User = response?.Value?.User ?? new UserModel();
+                return User;
             }
             else
             {
                 await PurgeAuth();
+                return new UserModel();
             }
         }
 
@@ -39,7 +39,9 @@ namespace CooperativaXZ
             if (user != null)
             {
                 await jwtService.SaveTokenAsync(user.Token);
-                state.UpdateUser(user);
+                User = user;
+                IsAuthenticated = true;
+                api.SetToken(user.Token);
             }
             else
             {
@@ -50,11 +52,10 @@ namespace CooperativaXZ
 
         private async Task PurgeAuth()
         {
-            UserModel newUser = new UserModel();
             await jwtService.DestroyTokenAsync();
-
-            if (state?.User != newUser)
-                state.UpdateUser(newUser);
+            User = new UserModel();
+            IsAuthenticated = false;
+            api.ClearToken();
         }
 
         public async Task SignOutAsync()
@@ -75,13 +76,10 @@ namespace CooperativaXZ
 
         public async Task<ApiResponse<UserResponse>> UpdateAsync(UserModel user)
         {
-            var response = await api.PutAsync<UserResponse>("/user", new
-            {
-                user = user
-            });
+            var response = await api.PutAsync<UserResponse>("/user", user);
 
             if (response?.Value != null)
-                state.UpdateUser(response.Value.User);
+                User = response.Value.User;
 
             return response;
         }

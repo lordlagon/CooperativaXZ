@@ -18,10 +18,9 @@ namespace CooperativaXZ
         Task<ApiResponse<T>> PostAsync<T>(string Path, object Value = null);
         Task<ApiResponse<T>> DeleteAsync<T>(string Path, IDictionary<string, string> Params = null);
     }
-
     public class ApiService : IApiService
     {
-        readonly string BaseUrl = Config.ApiUrl;
+        const string BaseUrl = "https://localhost:3000/";
 
         private HttpClient httpClient;
         private IConsoleLogService console;
