@@ -1,78 +1,83 @@
-@using Newtonsoft.Json;
-@using CooperativaXZ
 @page "/cadastro"
+@using CooperativaXZ
+@inject UserService userApi
+@inject NavigationManager navigation
 
 <div class="form-group d-flex justify-content-center">
 
-<div class="container">
-    <br>
-    <h1 class="display"style="text-align:center">Cadastro</h1>
-    <br>
-    <form> 
+    <div class="container">
+        <br>
+        <h1 class="display" style="text-align:center">Cadastro</h1>
+        <br>
+        <ErrorMessages Errors=@errors />
+        <form Model="userCredentials" onsubmit="OnSubmit">
 
-        <div class="form-group"style="margin-top:25px;">
-            <div class="col-md-6 offset-md-3">
-                <label > Nome </label>
-                <input bind="@user.Name" type="text" name="name" class="form-control " placeholder="Nome" required="" >    
+            <div class="form-group" style="margin-top:25px;">
+                <div class="col-md-6 offset-md-3">
+                    <label> Nome </label>
+                    <input bind="@userCredentials.Username" type="text" name="name" class="form-control " placeholder="Nome" required="">
+                </div>
             </div>
-        </div>
 
 
-        <div class="form-group">
-            <div class="col-md-6 offset-md-3">
-                <label > E-mail </label>
-                <input bind="@user.Email" type="text" name="email" class="form-control " placeholder="E-mail" required="" >    
+            <div class="form-group">
+                <div class="col-md-6 offset-md-3">
+                    <label> E-mail </label>
+                    <input bind="@userCredentials.Email" type="text" name="email" class="form-control " placeholder="E-mail" required="">
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col-md-6 offset-md-3">
-                <label > CPF </label>
-                <input bind="@user.Cpf" type="text" name="cpf" class="form-control " placeholder="CPF" required="" >    
+            <div class="form-group">
+                <div class="col-md-6 offset-md-3">
+                    <label> CPF </label>
+                    <input bind="@userCredentials.Cpf" type="text" name="cpf" class="form-control " placeholder="CPF" required="">
+                </div>
             </div>
-        </div>     
 
-        <div class="form-group">
-            <div class="col-md-6 offset-md-3">
-                <label> Crie sua senha </label>  
-                <input bind="@user.Password" type="password" name="password" class="form-control" placeholder="Senha" required="">
-                <small id="passHelp" class="form-text text-muted">(A senha deve ter de 8 a 16 caracteres, misturando letras e números.)</small>
+            <div class="form-group">
+                <div class="col-md-6 offset-md-3">
+                    <label> Crie sua senha </label>
+                    <input bind="@userCredentials.Password" type="password" name="password" class="form-control" placeholder="Senha" required="">
+                    <small id="passHelp" class="form-text text-muted">(A senha deve ter de 8 a 16 caracteres, misturando letras e números.)</small>
+                </div>
             </div>
-        </div> 
 
-        <div class="form-group">
-            <div class="col-md-6 offset-md-3">
-                <label> Confirme sua senha </label>  
-                <input type="password" name="password" class="form-control" placeholder="Senha Confirmação" required="">
+            <div class="form-group">
+                <div class="col-md-6 offset-md-3">
+                    <label> Confirme sua senha </label>
+                    <input type="password" name="password" class="form-control" placeholder="Senha Confirmação" required="">
+                </div>
             </div>
-        </div> 
 
-        <div class="form-group">
-            <div class="col-md-6 offset-md-3">
-                <button type="button" class="btn btn-info">Cadastrar</button>
-               
+            <div class="form-group">
+                <div class="col-md-6 offset-md-3">
+                    <button class="btn btn-info" @onclick="OnSubmit"> 
+                        Cadastrar 
+                    </button>
+
+                </div>
             </div>
-        </div>
-    </form> 
-</div>
+        </form>
+    </div>
 </div>
 
 
 @functions {
 
-    private User user { get; set; } = new User();
-    //precisei separar o user do usermodel pois tava com conflito.
+    UserCredentials userCredentials { get; set; } = new UserCredentials();
+    ErrorsModel errors = new ErrorsModel();
 
-    //onclick=@SaveNewUser adicionar no botao para chamar a funcao
-
-    //exemplo que utilizei pra tentar o post na API --> https://visualstudiomagazine.com/articles/2018/09/07/blazor-apis.aspx
-
-    /*private async Task SaveNewUser()
+    async Task OnSubmit()
     {
-        //colocar a api aqui
-        await httpClient.PostJsonAsync("api/contacts", contact);
-        
-        uriHelper.NavigateTo("contacts");
-    }*/
+        var response = await userApi.AttemptAuth(AuthenticationType.Register, userCredentials);
 
+        if (response != null && response.HasSuccessStatusCode)
+        {
+            navigation.NavigateTo("/");
+        }
+        else
+        {
+            errors = response?.Errors ?? new ErrorsModel();
+        }
+    }
 }
