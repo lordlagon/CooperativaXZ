@@ -20,7 +20,7 @@ namespace CooperativaXZ
     }
     public class ApiService : IApiService
     {
-        const string BaseUrl = "https://localhost:3000/";
+        const string BaseUrl = "https://localhost:3000";
 
         private HttpClient httpClient;
         private IConsoleLogService console;

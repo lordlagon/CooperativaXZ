@@ -65,7 +65,7 @@ namespace CooperativaXZ
 
         public async Task<ApiResponse<UserResponse>> AttemptAuth(string authType, UserCredentials credentials)
         {
-            var response = await api.PostAsync<UserResponse>($"/users{authType}", new
+            var response = await api.PostAsync<UserResponse>($"/member", new
             {
                 user = credentials
             });

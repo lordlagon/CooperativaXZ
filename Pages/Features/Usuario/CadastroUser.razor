@@ -10,12 +10,14 @@
         <h1 class="display" style="text-align:center">Cadastro</h1>
         <br>
         <ErrorMessages Errors=@errors />
-        <form Model="userCredentials" onsubmit="OnSubmit">
+        <EditForm Model="userCredentials" OnValidSubmit="@OnSubmit">
+            <DataAnnotationsValidator/>
+            <ValidationSummary/>
 
             <div class="form-group" style="margin-top:25px;">
                 <div class="col-md-6 offset-md-3">
                     <label> Nome </label>
-                    <input bind="@userCredentials.Username" type="text" name="name" class="form-control " placeholder="Nome" required="">
+                    <InputText id="name" @bind-Value="@userCredentials.Username" class="form-control " placeholder="Nome" required="">
                 </div>
             </div>
 
@@ -57,14 +59,14 @@
 
                 </div>
             </div>
-        </form>
+        </EditForm>
     </div>
 </div>
 
 
 @functions {
 
-    UserCredentials userCredentials { get; set; } = new UserCredentials();
+    UserCredentials userCredentials = new UserCredentials();
     ErrorsModel errors = new ErrorsModel();
 
     async Task OnSubmit()
