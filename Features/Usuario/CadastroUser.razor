@@ -2,12 +2,14 @@
 @using CooperativaXZ
 @inject UserService userApi
 @inject NavigationManager navigation
+@using System.Net.Http
+@inject HttpClient Http
 
 <div class="form-group d-flex justify-content-center">
 
     <div class="container">
         <br>
-        <h1 class="display" style="text-align:center">Cadastro</h1>
+        <h1 class="display" style="text-align:center">Cadastro Cooperado</h1>
         <br>
         <ErrorMessages Errors=@errors />
         <form Model="userCredentials" onsubmit="OnSubmit">
@@ -67,18 +69,29 @@
     UserCredentials userCredentials { get; set; } = new UserCredentials();
     ErrorsModel errors = new ErrorsModel();
 
+    //private string _newItemName; 1 metodo --alterar o bind para o nome da variavel sem @--
+
+    //private const string APIServer = "https://localhost:44359/api/products"; 2 metodo --colocar a api -- 
+    //private UserCredentials[] users; 2 metodo
+ 
+    //private string Username { get; set; } ;
+
     async Task OnSubmit()
     {
-        
+        //var teste = new UserCredentials { Username = userCredentials.Username }; 1 metodo
+        //await Http.PostJsonAsync("colocar a api", teste); 1 metodo
+
+        //var teste = new UserCredentials { Username = userCredentials.Username }; 2 metodo
+        //await Http.SendJsonAsync(HttpMethod.Post, APIServer, teste); 2 metodo
         var response = await userApi.AttemptAuth(AuthenticationType.Register, userCredentials);
 
         if (response != null && response.HasSuccessStatusCode)
         {
-            navigation.NavigateTo("/");
+            navigation.NavigateTo("/portfolio");
         }
         else
         {
-            errors = response?.Errors ?? new ErrorsModel();
+           errors = response?.Errors ?? new ErrorsModel();
         }
     }
 }
