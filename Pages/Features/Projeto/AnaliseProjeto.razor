@@ -1,4 +1,4 @@
-@page "/analiseProjeto"
+@page "/projeto/analiseProjeto"
 @using CooperativaXZ
 @using System.Net.Http
 @using Newtonsoft.Json
@@ -27,13 +27,13 @@
             </div>
             <div class="col-md-6 offset-md-3" style="margin-top:25px;">
                 <label for="text" style="text-align:center">Análise realizada</label>
-                <InputTextArea class="form-control" id="exampleTextarea" rows="5" placeholder="Escreva o que acha sobre o Projeto!"></InputTextArea>
+                <InputTextArea @bind-Value="@project.Name" class="form-control" id="exampleTextarea" rows="5" placeholder="Escreva o que acha sobre o Projeto!"></InputTextArea>
             </div>
             <br>
             <div class="form-group">
                 <div class="col-md-6 offset-md-3">
                     <label style="text-align:center"> Valor da Proposta </label>
-                    <InputText type="text" name="valor" class="form-control " placeholder="Digite o valor da Proposta" required=""/>
+                    <InputText @bind-Value="@project.Hirer" type="text" name="valor" class="form-control " placeholder="Digite o valor da Proposta" required=""/>
                 </div>
             </div>
 
@@ -44,10 +44,10 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-lg-6 col-sm-6">
-                                <InputText type="text" name="name" class="form-control " placeholder="Nome da entrega" required=""/>
+                                <InputText  type="text" name="name" class="form-control " placeholder="Nome da entrega" required=""/>
                             </div>
                             <div class="col-lg-6 col-sm-6">
-                                <InputText type="datetime" name="date" class="form-control " placeholder="Adicione a data" required=""/>
+                                <InputText  type="datetime" name="date" class="form-control " placeholder="Adicione a data" required=""/>
                             </div>
                         </div>
                     </div>
@@ -110,6 +110,8 @@
 
     private Project project { get; set; } = new Project();
 
+    
+
     private async Task OnSubmit()
     {
         var myContent = JsonConvert.SerializeObject(project);
@@ -119,7 +121,7 @@
 
         byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-        var response = await Http.PostAsync("http://localhost:3000/member", byteContent);
+        var response = await Http.PostAsync("http://localhost:3000/project", byteContent);
 
         if (!response.IsSuccessStatusCode)
         {
