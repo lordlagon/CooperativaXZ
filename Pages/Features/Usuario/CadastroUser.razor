@@ -1,14 +1,11 @@
 @page "/cadastro"
 @using CooperativaXZ
+@using System.Net.Http
+@using Newtonsoft.Json
+@using System.Net.Http.Headers;
 @inject UserService userApi
 @inject NavigationManager navigation
 @inject HttpClient Http
-@using System.Net;
-@using System.Net.Http;
-@using System.Net.Http.Headers;
-@using System.Threading.Tasks;
-@using System.Text;
-@using Newtonsoft.Json
 
 <div class="form-group d-flex justify-content-center">
 
@@ -17,12 +14,12 @@
         <h1 class="display" style="text-align:center">Cadastro Cooperado</h1>
         <br>
         <ErrorMessages Errors=@errors />
-        <!-- <form Model="userCredentials" onsubmit="CreateUser"> -->
+        <EditForm Model="userCredentials" OnValidSubmit="@CreateUser">
 
             <div class="form-group" style="margin-top:25px;">
                 <div class="col-md-6 offset-md-3">
                     <label> Nome </label>
-                    <input bind="@userCredentials.Username" type="text" name="name" class="form-control " placeholder="Nome" required="">
+                    <InputText @bind-Value="@userCredentials.Username" type="text" name="name" class="form-control " placeholder="Nome" required=""/>
                 </div>
             </div>
 
@@ -30,21 +27,21 @@
             <div class="form-group">
                 <div class="col-md-6 offset-md-3">
                     <label> E-mail </label>
-                    <input bind="@userCredentials.Email" type="text" name="email" class="form-control " placeholder="E-mail" required="">
+                    <InputText @bind-Value="@userCredentials.Email" type="text" name="email" class="form-control " placeholder="E-mail" required=""/>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="col-md-6 offset-md-3">
                     <label> CPF </label>
-                    <input bind="@userCredentials.Cpf" type="text" name="cpf" class="form-control " placeholder="CPF" required="">
+                    <InputText @bind-Value="@userCredentials.Cpf" type="text" name="cpf" class="form-control " placeholder="CPF" required=""/>
                 </div>
             </div>
 
             <div class="form-group">
                 <div class="col-md-6 offset-md-3">
                     <label> Crie sua senha </label>
-                    <input bind="@userCredentials.Password" type="password" name="password" class="form-control" placeholder="Senha" required="">
+                    <InputText @bind-Value="@userCredentials.Password" type="password" name="password" class="form-control" placeholder="Senha" required=""/>
                     <small id="passHelp" class="form-text text-muted">(A senha deve ter de 8 a 16 caracteres, misturando letras e números.)</small>
                 </div>
             </div>
@@ -58,13 +55,13 @@
 
             <div class="form-group">
                 <div class="col-md-6 offset-md-3">
-                    <button type="submit" class="btn btn-info" @onclick="@CreateUser">
+                    <button class="btn btn-info" type="submit">
                         Cadastrar
                     </button>
 
                 </div>
             </div>
-        <!-- </form> -->
+        </EditForm>
     </div>
 </div>
 
@@ -74,7 +71,13 @@
     private UserCredentials userCredentials { get; set; } = new UserCredentials();
     ErrorsModel errors = new ErrorsModel();
 
-    private async Task CreateUser(){
+    private async Task CreateUser()
+    {
+        //userCredentials.Cpf = "1234456";
+        //userCredentials.Email = "teste@teste.com";
+        //userCredentials.Password = "123456";
+        //userCredentials.Username = "gabzap";
+
         var myContent = JsonConvert.SerializeObject(userCredentials);
 
         var buffer = System.Text.Encoding.UTF8.GetBytes(myContent);
@@ -82,8 +85,14 @@
 
         byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-        await Http.PostAsync("http://localhost:3000/member", byteContent);
-    }
+        var response = await Http.PostAsync("http://localhost:3000/member", byteContent);
 
+        if (!response.IsSuccessStatusCode)
+        {
+            var res = response.RequestMessage.Content.ReadAsStringAsync();
+        }
+
+    }
 }
+
 
