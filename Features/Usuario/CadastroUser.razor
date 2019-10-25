@@ -2,8 +2,13 @@
 @using CooperativaXZ
 @inject UserService userApi
 @inject NavigationManager navigation
-@using System.Net.Http
 @inject HttpClient Http
+@using System.Net;
+@using System.Net.Http;
+@using System.Net.Http.Headers;
+@using System.Threading.Tasks;
+@using System.Text;
+@using Newtonsoft.Json
 
 <div class="form-group d-flex justify-content-center">
 
@@ -12,7 +17,7 @@
         <h1 class="display" style="text-align:center">Cadastro Cooperado</h1>
         <br>
         <ErrorMessages Errors=@errors />
-        <form Model="userCredentials" onsubmit="OnSubmit">
+        <!-- <form Model="userCredentials" onsubmit="CreateUser"> -->
 
             <div class="form-group" style="margin-top:25px;">
                 <div class="col-md-6 offset-md-3">
@@ -53,13 +58,13 @@
 
             <div class="form-group">
                 <div class="col-md-6 offset-md-3">
-                    <button class="btn btn-info" @onclick="@CreateUser">
+                    <button type="submit" class="btn btn-info" @onclick="@CreateUser">
                         Cadastrar
                     </button>
 
                 </div>
             </div>
-        </form>
+        <!-- </form> -->
     </div>
 </div>
 
@@ -70,7 +75,6 @@
     ErrorsModel errors = new ErrorsModel();
 
     private async Task CreateUser(){
-        
         var myContent = JsonConvert.SerializeObject(userCredentials);
 
         var buffer = System.Text.Encoding.UTF8.GetBytes(myContent);
@@ -80,6 +84,6 @@
 
         await Http.PostAsync("http://localhost:3000/member", byteContent);
     }
-}
 
+}
 
