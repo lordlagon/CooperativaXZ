@@ -53,8 +53,8 @@
 
             <div class="form-group">
                 <div class="col-md-6 offset-md-3">
-                    <button class="btn btn-info" @onclick="OnSubmit"> 
-                        Cadastrar 
+                    <button class="btn btn-info" @onclick="OnSubmit">
+                        Cadastrar
                     </button>
 
                 </div>
@@ -71,6 +71,7 @@
 
     async Task OnSubmit()
     {
+        
         var response = await userApi.AttemptAuth(AuthenticationType.Register, userCredentials);
 
         if (response != null && response.HasSuccessStatusCode)
@@ -83,3 +84,5 @@
         }
     }
 }
+
+

@@ -65,6 +65,11 @@ namespace CooperativaXZ
 
         public async Task<ApiResponse<UserResponse>> AttemptAuth(string authType, UserCredentials credentials)
         {
+            credentials.Cpf = "1234456";
+            credentials.Email = "teste@teste.com";
+            credentials.Password = "123456";
+            credentials.Username = "gabzap";
+            
             var response = await api.PostAsync<UserResponse>($"/member", new
             {
                 user = credentials
