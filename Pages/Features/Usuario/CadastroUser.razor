@@ -53,7 +53,7 @@
 
             <div class="form-group">
                 <div class="col-md-6 offset-md-3">
-                    <button class="btn btn-info" @onclick="@OnSubmit">
+                    <button class="btn btn-info" @onclick="@CreateUser">
                         Cadastrar
                     </button>
 
@@ -70,6 +70,7 @@
     ErrorsModel errors = new ErrorsModel();
 
     private async Task CreateUser(){
+        
         var myContent = JsonConvert.SerializeObject(userCredentials);
 
         var buffer = System.Text.Encoding.UTF8.GetBytes(myContent);
