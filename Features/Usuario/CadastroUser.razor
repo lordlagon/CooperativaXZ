@@ -66,33 +66,18 @@
 
 @functions {
 
-    UserCredentials userCredentials { get; set; } = new UserCredentials();
+    private UserCredentials userCredentials { get; set; } = new UserCredentials();
     ErrorsModel errors = new ErrorsModel();
 
-    //private string _newItemName; 1 metodo --alterar o bind para o nome da variavel sem @--
+    private async Task CreateUser(){
+        var myContent = JsonConvert.SerializeObject(userCredentials);
 
-    //private const string APIServer = "https://localhost:44359/api/products"; 2 metodo --colocar a api -- 
-    //private UserCredentials[] users; 2 metodo
- 
-    //private string Username { get; set; } ;
+        var buffer = System.Text.Encoding.UTF8.GetBytes(myContent);
+        var byteContent = new ByteArrayContent(buffer);
 
-    async Task OnSubmit()
-    {
-        //var teste = new UserCredentials { Username = userCredentials.Username }; 1 metodo
-        //await Http.PostJsonAsync("colocar a api", teste); 1 metodo
+        byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-        //var teste = new UserCredentials { Username = userCredentials.Username }; 2 metodo
-        //await Http.SendJsonAsync(HttpMethod.Post, APIServer, teste); 2 metodo
-        var response = await userApi.AttemptAuth(AuthenticationType.Register, userCredentials);
-
-        if (response != null && response.HasSuccessStatusCode)
-        {
-            navigation.NavigateTo("/portfolio");
-        }
-        else
-        {
-           errors = response?.Errors ?? new ErrorsModel();
-        }
+        await Http.PostAsync("http://localhost:3000/member", byteContent);
     }
 }
 
