@@ -8,7 +8,6 @@ namespace CooperativaXZ
         public string Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-
         public string OfferValue { get; set; }
         public string Analyze { get; set; }
         public string Hirer { get; set; }
