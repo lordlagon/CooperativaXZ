@@ -23,7 +23,6 @@
             </div>
         </div>
 
-
         <div class="form-group">
             <div class="col-md-6 offset-md-3">
                 <label > Escopo </label>
@@ -55,10 +54,6 @@
 
     private async Task CreateProject()
     {
-        //userCredentials.Cpf = "1234456";
-        //userCredentials.Email = "teste@teste.com";
-        //userCredentials.Password = "123456";
-        //userCredentials.Username = "gabzap";
     
         var myContent = JsonConvert.SerializeObject(projects);
 
@@ -67,7 +62,7 @@
 
         byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-        var response = await Http.PostAsync("http://localhost:3000/project", byteContent);
+        var response = await Http.PostAsync("http://localhost:3001/project", byteContent);
 
         if (!response.IsSuccessStatusCode)
         {
