@@ -1,4 +1,11 @@
 @page "/projeto/cadastroProjeto"
+@using CooperativaXZ
+@using System.Net.Http
+@using Newtonsoft.Json
+@using System.Net.Http.Headers;
+@inject UserService userApi
+@inject NavigationManager navigation
+@inject HttpClient Http
 
 <div class="form-group d-flex justify-content-center">
 
@@ -6,12 +13,13 @@
     <br>
     <h1 class="display"style="text-align:center">Registrar Projeto</h1>
     <br>
-    <form> 
+    <ErrorMessages Errors=@errors />
+    <EditForm Model="projects" OnValidSubmit="@CreateProject">
 
         <div class="form-group"style="margin-top:25px;">
             <div class="col-md-6 offset-md-3">
                 <label > Nome do Projeto </label>
-                <input type="text" name="projeto" class="form-control " placeholder="Nome do Projeto" required="" >    
+                <InputText @bind-Value="@projects.Name" type="text" name="projeto" class="form-control " placeholder="Nome do Projeto" required=""/>    
             </div>
         </div>
 
@@ -19,44 +27,54 @@
         <div class="form-group">
             <div class="col-md-6 offset-md-3">
                 <label > Escopo </label>
-                <input type="text" name="escopo" class="form-control " placeholder="Escopo" required="" >    
+               <InputText @bind-Value="@projects.Scope" type="text" name="escopo" class="form-control " placeholder="Escopo" required=""/>    
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-6 offset-md-3">
-                <label > Empresa </label>
-                <input type="text" name="empresa" class="form-control " placeholder="Empresa" required="" >    
+                <label > Descrição </label>
+                <InputText @bind-Value="@projects.Description" name="empresa" class="form-control " placeholder="Empresa" required=""/>    
             </div>
         </div>     
 
-       <div class="form-group">
-            <div class="col-md-6 offset-md-3">
-                <label > CNPJ </label>
-                <input type="text" name="cnpj" class="form-control " placeholder="CNPJ" required="" >    
-            </div>
-        </div>
-
-         <div class="form-group">
-            <div class="col-md-6 offset-md-3">
-                <label > Responsável </label>
-                <input type="text" name="resp" class="form-control " placeholder="Responsável" required="" >    
-            </div>
-        </div>
-
-         <div class="form-group">
-            <div class="col-md-6 offset-md-3">
-                <label > Valor da Proposta </label>
-                <input type="text" name="valor" class="form-control " placeholder="Valor da Proposta" required="" >    
-            </div>
-        </div> 
-
         <div class="form-group">
             <div class="col-md-6 offset-md-3">
-                <button type="button" class="btn btn-info">Cadastrar</button>
+                <button type="submit" class="btn btn-info">Cadastrar</button>
                
             </div>
         </div>
-    </form> 
+    </EditForm> 
 </div>
 </div>
+
+@functions {
+
+    private Project projects { get; set; } = new Project();
+    ErrorsModel errors = new ErrorsModel();
+
+    private async Task CreateProject()
+    {
+        //userCredentials.Cpf = "1234456";
+        //userCredentials.Email = "teste@teste.com";
+        //userCredentials.Password = "123456";
+        //userCredentials.Username = "gabzap";
+    
+        var myContent = JsonConvert.SerializeObject(projects);
+
+        var buffer = System.Text.Encoding.UTF8.GetBytes(myContent);
+        var byteContent = new ByteArrayContent(buffer);
+
+        byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+        var response = await Http.PostAsync("http://localhost:3000/project", byteContent);
+
+        if (!response.IsSuccessStatusCode)
+        {
+            var res = response.RequestMessage.Content.ReadAsStringAsync();
+        }
+
+    }
+}
+
+
