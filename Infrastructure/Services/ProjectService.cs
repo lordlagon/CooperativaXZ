@@ -1,22 +1,43 @@
-﻿using System.Net.Http;
+﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace CooperativaXZ
 {
     public class ProjectService
     {
-        private HttpClient httpClient;
         public async Task<Project[]> GetProjectAsync()
         {
-            var response = await httpClient.GetAsync("http://localhost:3001/project");
-
-            if (response.IsSuccessStatusCode)
+            var baseAddress = "http://localhost:3001/project";
+            try
             {
-                var r = response;
-            }
+                using (var client = new HttpClient())
+                {
+                    using (var response = client.GetAsync(baseAddress).Result)
+                    {
+                        if (response.IsSuccessStatusCode)
+                        {
+                            var customerJsonString = await response.Content.ReadAsStringAsync();
+                            return JsonConvert.DeserializeObject<IList<Project>>(customerJsonString).ToArray();
+                            
+                        }
+                        else
+                        {
+                            return null;
+                        }
+                    }
+                }
 
-            Project[] projects = new Project()[];
-            return projects;
+            }
+            catch (System.Exception)
+            {
+                return null;
+            }
         }
+
     }
 }

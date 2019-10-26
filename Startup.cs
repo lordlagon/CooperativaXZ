@@ -26,6 +26,7 @@ namespace CooperativaXZ
             services.AddScoped<IApiService, ApiService>();
             services.AddScoped<System.Net.Http.HttpClient>();
             services.AddScoped<UserService>();
+            services.AddScoped<ProjectService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
