@@ -3,48 +3,49 @@
 @using System.Net.Http
 @using Newtonsoft.Json
 @using System.Net.Http.Headers;
+@inject Microsoft.AspNetCore.Components.NavigationManager UriHelper
 @inject UserService userApi
 @inject NavigationManager navigation
 @inject HttpClient Http
 
 <div class="form-group d-flex justify-content-center">
 
-<div class="container">
-    <br>
-    <h1 class="display"style="text-align:center">Cadastrar Projeto</h1>
-    <br>
-    <ErrorMessages Errors=@errors />
-    <EditForm Model="projects" OnValidSubmit="@CreateProject">
+    <div class="container">
+        <br>
+        <h1 class="display" style="text-align:center">Cadastrar Projeto</h1>
+        <br>
+        <ErrorMessages Errors=@errors />
+        <EditForm Model="projects" OnValidSubmit="@CreateProject">
 
-        <div class="form-group"style="margin-top:25px;">
-            <div class="col-md-6 offset-md-3">
-                <label > Nome do Projeto </label>
-                <InputText @bind-Value="@projects.Name" type="text" name="projeto" class="form-control " placeholder="Nome do Projeto" required=""/>    
+            <div class="form-group" style="margin-top:25px;">
+                <div class="col-md-6 offset-md-3">
+                    <label> Nome do Projeto </label>
+                    <InputText @bind-Value="@projects.Name" type="text" name="projeto" class="form-control " placeholder="Nome do Projeto" required="" />
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col-md-6 offset-md-3">
-                <label > Escopo </label>
-               <InputText @bind-Value="@projects.Scope" type="text" name="escopo" class="form-control " placeholder="Escopo" required=""/>    
+            <div class="form-group">
+                <div class="col-md-6 offset-md-3">
+                    <label> Escopo </label>
+                    <InputText @bind-Value="@projects.Scope" type="text" name="escopo" class="form-control " placeholder="Escopo" required="" />
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col-md-6 offset-md-3">
-                <label > Descrição </label>
-                <InputText @bind-Value="@projects.Description" name="empresa" class="form-control " placeholder="Descrição" required=""/>    
+            <div class="form-group">
+                <div class="col-md-6 offset-md-3">
+                    <label> Descrição </label>
+                    <InputText @bind-Value="@projects.Description" name="empresa" class="form-control " placeholder="Descrição" required="" />
+                </div>
             </div>
-        </div>     
 
-        <div class="form-group">
-            <div class="col-md-6 offset-md-3">
-                <button type="submit" class="btn btn-info">Cadastrar</button>
-               
+            <div class="form-group">
+                <div class="col-md-6 offset-md-3">
+                    <button type="submit" class="btn btn-info">Cadastrar</button>
+
+                </div>
             </div>
-        </div>
-    </EditForm> 
-</div>
+        </EditForm>
+    </div>
 </div>
 
 @functions {
@@ -54,7 +55,7 @@
 
     private async Task CreateProject()
     {
-    
+
         var myContent = JsonConvert.SerializeObject(projects);
 
         var buffer = System.Text.Encoding.UTF8.GetBytes(myContent);
@@ -66,7 +67,7 @@
 
         if (!response.IsSuccessStatusCode)
         {
-            var res = response.RequestMessage.Content.ReadAsStringAsync();
+            UriHelper.NavigateTo("/projeto");
         }
 
     }
