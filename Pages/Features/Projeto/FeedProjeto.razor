@@ -3,9 +3,8 @@
 @using CooperativaXZ
 @inject ProjectService projectService
 
-<h1>Weather forecast</h1>
+<h1>Projetos</h1>
 
-<p>This component demonstrates fetching data from a service.</p>
 
 @if (forecasts == null)
 {
@@ -16,8 +15,8 @@ else
     <table class="table">
         <thead>
             <tr>
-                <th>Date</th>
-                <th>Temp. (C)</th>
+                <th>Nome</th>
+                <th>Descrição</th>
             </tr>
         </thead>
         <tbody>
@@ -26,6 +25,9 @@ else
                 <tr>
                     <td>@forecast.Name</td>
                     <td>@forecast.Description</td>
+                    <td>
+                    <a href="projeto/VerDatas">Datas</a>
+                    </td>
                 </tr>
             }
         </tbody>
