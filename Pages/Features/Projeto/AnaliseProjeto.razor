@@ -27,13 +27,13 @@
             </div>
             <div class="col-md-6 offset-md-3" style="margin-top:25px;">
                 <label for="text" style="text-align:center">Análise realizada</label>
-                <InputText @bind-Value="@project.Analyze" class="form-control" id="exampleTextarea" rows="5" placeholder="Escreva o que acha sobre o Projeto!"></InputTextArea>
+                <InputText @bind-Value="@project.Analyze" class="form-control" id="exampleTextarea" rows="5" placeholder="Escreva o que acha sobre o Projeto!"></InputText>
             </div>
             <br>
             <div class="form-group">
                 <div class="col-md-6 offset-md-3">
                     <label style="text-align:center"> Valor da Proposta </label>
-                    <InputText @bind-Value="@project.Description" type="text" name="valor" class="form-control " placeholder="Digite o valor da Proposta" required=""/>
+                    <InputText @bind-Value="@project.OfferValue" type="text" name="valor" class="form-control " placeholder="Digite o valor da Proposta" required=""> </InputText>
                 </div>
             </div>
 
